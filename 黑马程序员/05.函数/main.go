@@ -14,6 +14,8 @@
 	不定参数的位置可以不传递参数
 	不定参数只能是函数参数列表中的最以后一个参数
 	不定参数必须是同一个类型
+函数类型(函数指针)
+	使用type关键字给一个函数起名,
 
 **/
 
@@ -25,10 +27,16 @@ func main() {
 	func1()
 	func2("李超群", "QG", 20, 100.1111, 111.111)
 	func3("李超群", "QG", 20, "LCQ", "WXC", "LWT")
-	func4("李超群", "QG", 20, "LCQ", "WXC", "LWT")
+	name, _, age := func4("李超群", "QG", 20, "LCQ", "WXC", "LWT")
+
+	inputFuncHandle := func4
+	outputFuncHandle, outputName, outputAge := func5(inputFuncHandle, name, age)
+	outputName, _, outputAge = outputFuncHandle(outputName, "QG", outputAge, "LCQ", "WXC", "LWT")
+	func3(outputName, "QG", outputAge, "LCQ", "WXC", "LWT")
+
 }
 
-// - 无参无返回值
+// - 无参无返回值0000
 func func1() {
 	fmt.Println("func1")
 }
@@ -70,5 +78,21 @@ func func4(inputName, inputNickName string, inputAge int, inputFriends ...string
 	outputName = "QG"
 	outputNickName = "李超群"
 	outputAge = 30
+	return
+}
+func func44(inputName, inputNickName string, inputAge int, inputFriends ...string) (outputName, outputNickName string, outputAge int) {
+	func3(inputName, inputNickName, inputAge, inputFriends[1:]...)
+	outputName = "QG_1"
+	outputNickName = "李超群_1"
+	outputAge = 31
+	return
+}
+
+// - 使用函数类型
+type funcHandle func(string, string, int, ...string) (string, string, int)
+
+func func5(inputHandle funcHandle, inputName string, inputAge int) (outputHandle funcHandle, outputName string, oututAge int) {
+	outputName, _, oututAge = func4("李超群", "QG", 20, "LCQ", "WXC", "LWT")
+	outputHandle = func44
 	return
 }
