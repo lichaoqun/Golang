@@ -17,6 +17,22 @@
 	如果种子参数一样, 每次程序运行产生随机数都是相同的.
 
 slice
+	数组初始化和声明时候需要指定长度, 而slice 不用指定长度
+	写法
+		s1 := [...]int{1, 2, 3, 0, 0}
+		s1 := []int{1, 2, 3, 0, 0}
+		s1 := make([]int, 3 ,5) : make(切片类型, 切片长度, 切片容量)
+
+	使用 slice 截取数组的指定元素
+		slice := array[low:high:max]
+		low: low 索引的起点
+		high: 长度截止索引的终点(不包括此索引), 即长度范围是 [low, high), 取到的是 [array[low] ~ array[high]), 此时 slice 的长度 = high - low
+		max: 容量截止的数组的索引(不包括此索引); 即容量范围是 [low, max), 取到的是 [array[low] ~ array[high]) + [array[high] ~ array[max]), 此时 slice 的容量 = max - low
+		长度 : 表示已填充内容的长度  len(slice) = high - low
+		容量 : 表示已填充内容的长度 + 未填充内容的长度; cap(slice) = max - low
+	区别
+		数组长度和容量不可变.
+		切片长度和容量可以不固定 .
 
 **/
 package main
@@ -96,19 +112,20 @@ func main() {
 		// - 指定某个元素初始化
 		nums5 := [count]int{0: 3, 2: 1}
 		fmt.Println(nums5)
+	}
 
-		// - 二维数组
+	{ // - 二维数组
 		// - 三行四列的二位素组初始化
-		nums6 := [3][4]int{
+		nums1 := [3][4]int{
 			{11, 21, 31, 41},
 			{21, 22, 23, 24},
 			{31, 32, 33, 34},
 		}
-		fmt.Println(nums6)
+		fmt.Println(nums1)
 
 		// - 默认填充元素和指定某个元素初始化
-		var nums7 [3][4]int = [3][4]int{0: {11, 21}, 2: {0: 31, 2: 33}}
-		fmt.Println(nums7)
+		var nums2 [3][4]int = [3][4]int{0: {11, 21}, 2: {0: 31, 2: 33}}
+		fmt.Println(nums2)
 	}
 
 	{ // - 随机数 这里因为种子是确定的, 所以程序每次启动得到的随机数都是相同的, 如果不希望每次的随机数都相同, 可以使用时间作为随机数种子.
@@ -129,9 +146,37 @@ func main() {
 		// - 数组作为参数是值传递, 只是将数组元素复制后作为参数参数.
 		modify1(array)
 		fmt.Println("调用 数组作为参数 后: ", array)
+
 		// - 数组指针作为参数指针传递
 		modify2(&array)
 		fmt.Println("调用 数组指针作为参数 后: ", array)
+	}
+
+	{ // - slice
+		// - 切片初始化方式并类型推导
+		s1 := [...]int{1, 2, 3, 0, 0}
+		fmt.Println("s1 是:", s1, "长度是:", len(s1), "容量是:", cap(s1))
+
+		// - 切片初始化方式并类型推导
+		var s2 = [...]int{1, 2, 3, 0, 0}
+		fmt.Println("s2 是:", s2, "长度是:", len(s2), "容量是:", cap(s2))
+
+		// - 切片初始化方式并类型推导
+		var s3 = []int{1, 2, 3, 0, 0}
+		fmt.Println("s3 是:", s3, "长度是:", len(s3), "容量是:", cap(s3))
+
+		// - 使用make函数
+		var s4 = make([]int, 3, 5)
+		fmt.Println("s4 是:", s4, "长度是:", len(s4), "容量是:", cap(s4))
+
+		// - 长度和容量都是5
+		s5 := make([]int, 5)
+		fmt.Println("s5 是:", s5, "长度是:", len(s5), "容量是:", cap(s5))
+
+		// - 切片的操作
+		array := [5]int{1, 2, 3, 4, 5}
+		nums4 := array[2:3:4]
+		fmt.Println("slice 是:", nums4, "长度是:", len(nums4), "容量是:", cap(nums4))
 	}
 }
 
