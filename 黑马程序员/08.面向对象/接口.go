@@ -10,6 +10,8 @@
 			如果你的接口中使用 func (tmp *Bird) run(), 那么你需要这么写 var b AnimalRunner = &Bird{}
 	空接口
 		空接口可以当做泛型使用 类似 void* id object
+	获取类型
+		使用 data.(type) 获取是对象类型, 使用 data.(int)判断对象是不是 int类型
 
 **/
 package main
@@ -135,6 +137,48 @@ func aboutJK() {
 		// - 打印
 		for _, interfaceValue := range slice {
 			fmt.Printf("type is %T, value is %v\n", interfaceValue, interfaceValue)
+		}
+
+		// - 类型判断
+		log(i1, i2, i3, i4, i5, i6, i7, i8)
+		log1(i1, i2, i3, i4, i5, i6, i7, i8)
+	}
+}
+
+// - 任意类型的可变参数作为函数参数
+func log(arg ...interface{}) {
+	// - 类型查询
+	for idx, data := range arg {
+		if value, isType := data.(int); isType {
+			fmt.Println("第", idx, "的类型是int", ", value is", value)
+		}
+		if value, isType := data.(*Dog); isType {
+			fmt.Println("第", idx, "*Dog", ", value is", value)
+		}
+		if value, isType := data.(Car); isType {
+			fmt.Println("第", idx, "Car", ", value is", value)
+		}
+		if value, isType := data.(AnimalRunner); isType {
+			fmt.Println("第", idx, "AnimalRunner", ", value is", value)
+		}
+	}
+}
+
+func log1(arg ...interface{}) {
+	for idx, data := range arg {
+		switch data.(type) {
+		case int:
+			fmt.Println("第", idx, "是基本数据类型 int, value is", data)
+		case float64:
+			fmt.Println("第", idx, "是基本数据类型 float64, value is", data)
+		case int32:
+			fmt.Println("第", idx, "是基本数据类型 int32, value is", data)
+		case string:
+			fmt.Println("第", idx, "是基本数据类型 string, value is", data)
+		case bool:
+			fmt.Println("第", idx, "是基本数据类型 bool, value is", data)
+		default:
+			fmt.Println("第", idx, "是自定义数据类型, value is", data)
 		}
 	}
 }
