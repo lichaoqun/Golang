@@ -140,13 +140,13 @@ func aboutJK() {
 		}
 
 		// - 类型判断
-		log(i1, i2, i3, i4, i5, i6, i7, i8)
-		log1(i1, i2, i3, i4, i5, i6, i7, i8)
+		logType1(i1, i2, i3, i4, i5, i6, i7, i8)
+		logType2(i1, i2, i3, i4, i5, i6, i7, i8)
 	}
 }
 
 // - 任意类型的可变参数作为函数参数
-func log(arg ...interface{}) {
+func logType1(arg ...interface{}) {
 	// - 类型查询
 	for idx, data := range arg {
 		if value, isType := data.(int); isType {
@@ -164,7 +164,7 @@ func log(arg ...interface{}) {
 	}
 }
 
-func log1(arg ...interface{}) {
+func logType2(arg ...interface{}) {
 	for idx, data := range arg {
 		switch data.(type) {
 		case int:
