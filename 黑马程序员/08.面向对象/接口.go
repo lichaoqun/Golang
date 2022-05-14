@@ -12,6 +12,7 @@
 		空接口可以当做泛型使用 类似 void* id object
 	获取类型
 		使用 data.(type) 获取是对象类型, 使用 data.(int)判断对象是不是 int类型
+	结构体中可以使用匿名接口
 
 **/
 package main
@@ -55,6 +56,12 @@ type Bird struct {
 	title     string
 	runUse    string
 	wingCount int
+}
+
+// - 结构体中使用匿名接口
+type Anchor struct {
+	AnimalRunner
+	livePlatform string
 }
 
 func (tmp *Bird) run() {
@@ -116,6 +123,15 @@ func aboutJK() {
 		personRunnerTest(b)
 		//- 下边会报错, 多态必须是父类指向子类
 		// personRunnerTest(r)
+	}
+
+	{ // - 结构体中使用匿名接口
+		a := Anchor{&b, "企鹅体育"}
+
+		// - 调用接口的方法
+		a.AnimalRunner.run()
+
+		fmt.Println(a, "直播平台是", a.livePlatform)
 	}
 
 	{ // - 空接口
