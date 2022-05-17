@@ -68,8 +68,7 @@ func swapPtr(value1, value2 *int) {
 	*value1, *value2 = *value2, *value1
 }
 
-
-func () *int {
+func f() *int {
 	v := 1
 	return &v
 }
@@ -77,6 +76,7 @@ func () *int {
 // - fTest函数里的x变量必须在堆上分配，因为它在函数退出后依然可以通过包一级的global变量找到，虽然它是在函数内部定义的；用Go语言的术语说，这个x局部变量从函数f中逃逸了。
 // - gTest函数返回时，变量*y将是不可达的，也就是说可以马上被回收的。因此，*y并没有从函数g中逃逸，编译器可以选择在栈上分配*y的存储空间
 var global *int
+
 func fTest() {
 	var x int
 	x = 1

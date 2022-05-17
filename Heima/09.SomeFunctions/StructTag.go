@@ -13,13 +13,13 @@ type IT struct {
 	Score    float64
 }
 
-func main() {
-	s := IT{"itcast", []string{"Go", "C++", "Java"}, false, 6.4};
+func aboutStructTag() {
+	s := IT{"itcast", []string{"Go", "C++", "Java"}, false, 6.4}
 	//buf, err := json.Marshal(s);
-	buf, err := json.MarshalIndent(s, "", "    "); // indent最好4个空格，累容
-	if (err != nil) {
-		fmt.Println("err =", err);
-		return;
+	buf, err := json.MarshalIndent(s, "", "    ") // indent最好4个空格，累容
+	if err != nil {
+		fmt.Println("err =", err)
+		return
 	}
-	fmt.Println("buf =", string(buf));
+	fmt.Println("buf =", string(buf))
 }
